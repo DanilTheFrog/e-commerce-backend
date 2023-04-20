@@ -1,1 +1,1 @@
-prisma studio
+prisma studio 
