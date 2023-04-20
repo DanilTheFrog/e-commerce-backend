@@ -1,0 +1,109 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_ad")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  email    String @unique
+  password String
+
+  name       String @unique
+  avatarPath String @default("/uploads/default-avatar.png") @map("avatar_path")
+
+  phone String @default("")
+
+  orders Order[]
+  reviews Review[]
+
+  favorites Product[]
+}
+
+model Product {
+  id        Int      @unique @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name        String   @unique
+  slug        String   @unique
+  description String
+  images      String[]
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int      @map("category_id")
+  reviews    Review[]
+
+  orderItems OrderItem[]
+
+  user User? @relation(fields: [userId], references: [id])
+  userId Int?
+
+  price Int
+}
+
+model Category {
+  id        Int      @unique @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt() @map("updated_at")
+
+  name    String    @unique
+  products Product[]
+}
+
+model Review {
+  id        Int      @unique @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt() @map("updated_at")
+
+  rating    Int
+  text      String
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId Int? @map("product_id")
+
+  user User? @relation(fields: [userId], references: [id])
+  userId Int? @map("User_id")
+}
+
+model Order {
+  id        Int      @unique @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt() @map("updated_at")
+
+  status EnumOrderStatus @default(PENDING)
+  items  OrderItem[]
+
+  user User? @relation(fields: [userId], references: [id])
+  userId Int? @map("User_id")
+}
+
+enum EnumOrderStatus {
+  PENDING
+  PAYED
+  SHIPPED
+  DELIVERED
+}
+
+model OrderItem {
+  id        Int      @unique @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt() @map("updated_at")
+
+  quantity Int
+  price    Int
+
+  order    Order? @relation(fields: [orderId], references: [id])
+  orderId  Int?
+
+  product Product? @relation(fields: [productId], references: [id])
+  productId Int? @map("product_id")
+}
