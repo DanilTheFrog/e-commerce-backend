@@ -71,14 +71,14 @@ export class UserService {
             },
             data: {
                 favorites:{
-                    [isExist ? 'disconnext' : 'connect']: {
-                        productId
+                    [isExist ? 'disconnect' : 'connect']: {
+                        id: productId
                     }
                 }
             }
         })
 
-        return 'success'
+        return {message: 'success'}
     }
 
 }

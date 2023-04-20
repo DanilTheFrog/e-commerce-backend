@@ -36,8 +36,3 @@ export class UserController {
   }
 
 }
-
-
-//get Profile
-//toggle favorites
-//update profile

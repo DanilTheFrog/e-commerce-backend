@@ -1,5 +1,4 @@
 export const translit = (str: string) => {
-    // продолжи заполнять русский алфавит 
     const ru = 'А-а-Б-б-В-в-Г-г-Д-д-Е-е-Ё-ё-Ж-ж-З-з-И-и-Й-й-К-к-Л-л-М-м-Н-н-О-о-П-п-Р-р-С-с-Т-т-У-у-Ф-ф-Х-х-Ц-ц-Ч-ч-Ш-ш-Щ-щ-Ъ-ъ-Ы-ы-Ь-ь-Э-э-Ю-ю-Я-я'.split('-')
 
     const en = 
@@ -7,7 +6,7 @@ export const translit = (str: string) => {
     
     let res='';
 
-    for(let i=0; str.length; i++) {
+    for(let i=0; i<str.length; i++) {
         const s = str.charAt(i);
         const n = ru.indexOf(s);
 
@@ -21,7 +20,7 @@ export const translit = (str: string) => {
     return res;
 }
 
-export const generateSlug = (str:string): string => {
+export default (str:string): string => {
     let url: string = str.replace(/[\s]+/gi, '-');
 
     url = translit(url);
