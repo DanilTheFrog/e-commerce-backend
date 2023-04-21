@@ -1,6 +1,6 @@
-import { PrismaClient, Product } from "@prisma/client";
-import * as env from 'dotenv'
 import { faker } from "@faker-js/faker";
+import { PrismaClient, Product } from "@prisma/client";
+import * as env from 'dotenv';
 env.config()
 
 const prisma = new PrismaClient();
@@ -16,13 +16,13 @@ const createProducts = async (quantity: number) => {
             data: {
                 name: productName,
                 description: faker.commerce.productDescription(),
-                slug: faker.helpers.slugify(productName),
+                slug: faker.helpers.slugify(productName).toLowerCase(),
                 price: +faker.commerce.price(10, 999, 0),
-                images: Array.from({length: faker.datatype.number({min:2, max: 6})}).map(()=>(faker.image.imageUrl())),
+                images: Array.from({length: faker.datatype.number({min:2, max: 6})}).map(()=>(faker.image.imageUrl(500, 500))),
                 category: {
                     create: {
                         name: categoryName,
-                        slug: faker.helpers.slugify(categoryName)
+                        slug: faker.helpers.slugify(categoryName).toLowerCase()
                     }
                 },
                 reviews: {
@@ -32,7 +32,7 @@ const createProducts = async (quantity: number) => {
                             text: faker.lorem.paragraph(),
                             user: {
                                 connect: {
-                                    id: 1
+                                    id: 4
                                 }
                             }
                         },
@@ -41,7 +41,7 @@ const createProducts = async (quantity: number) => {
                             text: faker.lorem.paragraph(),
                             user: {
                                 connect: {
-                                    id: 1
+                                    id: 4
                                 }
                             }
                         },

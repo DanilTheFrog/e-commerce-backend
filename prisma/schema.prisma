@@ -68,11 +68,13 @@ model Review {
 
   rating    Int
   text      String
-  Product   Product? @relation(fields: [productId], references: [id])
+  
+  product   Product? @relation(fields: [productId], references: [id])
   productId Int? @map("product_id")
 
   user User? @relation(fields: [userId], references: [id])
   userId Int? @map("User_id")
+
 }
 
 model Order {
@@ -107,4 +109,6 @@ model OrderItem {
 
   product Product? @relation(fields: [productId], references: [id])
   productId Int? @map("product_id")
+
+  @@map("Order_item")
 }

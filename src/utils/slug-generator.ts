@@ -20,7 +20,7 @@ export const translit = (str: string) => {
     return res;
 }
 
-export default (str:string): string => {
+export const generateSlug = (str:string): string => {
     let url: string = str.replace(/[\s]+/gi, '-');
 
     url = translit(url);

@@ -1,13 +1,15 @@
-import { Body, Controller, 
-  Get, HttpCode, Patch, 
-  UsePipes, ValidationPipe,
+import {
+  Body, Controller,
+  Get, HttpCode,
   Param,
-  Put
+  Patch,
+  Put,
+  UsePipes, ValidationPipe
 } from '@nestjs/common';
-import { UserService } from './user.service';
 import { Auth } from 'src/decorators/auth.decorator';
 import { CurrentUser } from 'src/decorators/user.decorator';
 import { UserDto } from './user.dto';
+import { UserService } from './user.service';
 
 @Controller('users')
 export class UserController {
@@ -36,3 +38,4 @@ export class UserController {
   }
 
 }
+
